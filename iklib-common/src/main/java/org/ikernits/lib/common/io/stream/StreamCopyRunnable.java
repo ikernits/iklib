@@ -4,7 +4,13 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.ikernits.lib.spring.process.ProcessExecutionService;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -62,5 +68,15 @@ public class StreamCopyRunnable implements Runnable {
 
     public ProcessExecutionService.IoResult getIoResult() {
         return new ProcessExecutionService.IoResult(data.toByteArray(), totalBytesRead, totalBytesWritten, error);
+    }
+
+    public static void main(String[] args) throws IOException {
+        File file = new File("./pipe");
+        InputStream is = new FileInputStream(file);
+
+        int val = 0;
+        while ( (val = is.read()) != -1) {
+            System.out.println(val);
+        }
     }
 }

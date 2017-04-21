@@ -1,6 +1,5 @@
 package org.ikernits.lib.common.io.daemon;
 
-import org.apache.log4j.helpers.LogLog;
 import org.ikernits.lib.common.io.IoStreamSource;
 
 import java.io.IOException;
