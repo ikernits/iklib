@@ -14,10 +14,10 @@ public class AbstractComponentContainerBuilder<T extends AbstractComponentContai
     }
     
     /**
-     * @see com.vaadin.ui.AbstractComponentContainer#addComponent
+     * @see com.vaadin.ui.AbstractComponentContainer#setWidth
      */
-    public B addComponent(Component component) {
-        delegate.addComponent(component);
+    public B setWidth(float width, Unit unit) {
+        delegate.setWidth(width, unit);
         return self;
     }
     
@@ -30,6 +30,14 @@ public class AbstractComponentContainerBuilder<T extends AbstractComponentContai
     }
     
     /**
+     * @see com.vaadin.ui.AbstractComponentContainer#setHeight
+     */
+    public B setHeight(float height, Unit unit) {
+        delegate.setHeight(height, unit);
+        return self;
+    }
+    
+    /**
      * @see com.vaadin.ui.AbstractComponentContainer#addComponentDetachListener
      */
     public B addComponentDetachListener(ComponentDetachListener componentDetachListener) {
@@ -38,18 +46,26 @@ public class AbstractComponentContainerBuilder<T extends AbstractComponentContai
     }
     
     /**
-     * @see com.vaadin.ui.AbstractComponentContainer#setWidth
+     * @see com.vaadin.ui.AbstractComponentContainer#addComponent
      */
-    public B setWidth(float width, Unit unit) {
-        delegate.setWidth(width, unit);
+    public B addComponent(Component component) {
+        delegate.addComponent(component);
         return self;
     }
     
     /**
-     * @see com.vaadin.ui.AbstractComponentContainer#setHeight
+     * @see com.vaadin.ui.AbstractComponentContainer#addListener
      */
-    public B setHeight(float height, Unit unit) {
-        delegate.setHeight(height, unit);
+    public B addListener(ComponentAttachListener listener) {
+        delegate.addListener(listener);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.AbstractComponentContainer#addListener
+     */
+    public B addListener(ComponentDetachListener listener) {
+        delegate.addListener(listener);
         return self;
     }
     

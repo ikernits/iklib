@@ -14,6 +14,10 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.SocketConfig;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -23,7 +27,9 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StreamUtils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
@@ -135,15 +141,56 @@ public class HttpClientServiceApacheImpl implements HttpClientService, Initializ
 
         if (httpRequest instanceof HttpEntityEnclosingRequestBase) {
             HttpEntityEnclosingRequestBase requestBase = (HttpEntityEnclosingRequestBase) httpRequest;
-            requestBase.setEntity(new UrlEncodedFormEntity(
-                request.getParams().entrySet().stream()
-                    .map(e -> new BasicNameValuePair(e.getKey(), e.getValue()))
-                    .collect(Collectors.toList()),
-                Charsets.UTF_8
-            ));
+
+            if (request.isMultipart()) {
+                MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+                request.getParams().entrySet().forEach(
+                    e -> {
+                        if (e.getValue() instanceof String) {
+                            entityBuilder.addPart(e.getKey(), new ByteArrayBody(
+                                ((String) e.getValue()).getBytes(Charsets.UTF_8), null
+                            ));
+                        } else if (e.getValue() instanceof byte[]) {
+                            entityBuilder.addPart(e.getKey(), new ByteArrayBody(
+                                ((byte[]) e.getValue()), null
+                            ));
+                        } else if (e.getValue() instanceof InputStream) {
+                            entityBuilder.addPart(e.getKey(), new InputStreamBody(
+                                (InputStream)e.getValue(), (String)null
+                            ));
+                        } else if (e.getValue() instanceof File) {
+                            entityBuilder.addPart(e.getKey(), new FileBody(
+                                (File)e.getValue()
+                            ));
+                        } else {
+                            throw new IllegalArgumentException("Invalid parameter type for '" + e.getValue() + "': " + e.getValue().getClass());
+                        }
+                    });
+                requestBase.setEntity(entityBuilder.build());
+            } else {
+                requestBase.setEntity(new UrlEncodedFormEntity(
+                    request.getParams().entrySet().stream()
+                        .map(e -> {
+                            if (e.getValue() instanceof String) {
+                                return new BasicNameValuePair(e.getKey(), (String)e.getValue());
+                            } else {
+                                throw new IllegalArgumentException("Invalid parameter type for '" + e.getValue() + "': " + e.getValue().getClass());
+                            }
+                        })
+                        .collect(Collectors.toList()),
+                    Charsets.UTF_8
+                ));
+            }
         } else {
             URIBuilder uriBuilder = new URIBuilder(httpRequest.getURI());
-            request.getParams().forEach(uriBuilder::setParameter);
+            request.getParams()
+                .forEach((k,v) -> {
+                    if (v instanceof String) {
+                        uriBuilder.setParameter(k, v.toString());
+                    } else {
+                        throw new IllegalArgumentException("Invalid parameter type for '" + k + "': " + v.getClass());
+                    }
+                });
             httpRequest.setURI(uriBuilder.build());
         }
 

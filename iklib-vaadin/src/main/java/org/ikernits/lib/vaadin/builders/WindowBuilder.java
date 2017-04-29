@@ -9,7 +9,6 @@ import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.Window.CloseListener;
 import com.vaadin.ui.Window.ResizeListener;
 import com.vaadin.ui.Window.WindowModeChangeListener;
-import com.vaadin.ui.Window.WindowOrderChangeListener;
 
 @SuppressWarnings({"deprecation", "unused", "unchecked"})
 public class WindowBuilder<T extends Window, B extends WindowBuilder<T, B>> extends PanelBuilder<T, B> {
@@ -27,18 +26,10 @@ public class WindowBuilder<T extends Window, B extends WindowBuilder<T, B>> exte
     }
     
     /**
-     * @see com.vaadin.ui.Window#setPosition
+     * @see com.vaadin.ui.Window#addBlurListener
      */
-    public B setPosition(int param1, int param2) {
-        delegate.setPosition(param1, param2);
-        return self;
-    }
-    
-    /**
-     * @see com.vaadin.ui.Window#setClosable
-     */
-    public B setClosable(boolean closable) {
-        delegate.setClosable(closable);
+    public B addBlurListener(BlurListener blurListener) {
+        delegate.addBlurListener(blurListener);
         return self;
     }
     
@@ -51,10 +42,58 @@ public class WindowBuilder<T extends Window, B extends WindowBuilder<T, B>> exte
     }
     
     /**
-     * @see com.vaadin.ui.Window#addBlurListener
+     * @see com.vaadin.ui.Window#setClosable
      */
-    public B addBlurListener(BlurListener blurListener) {
-        delegate.addBlurListener(blurListener);
+    public B setClosable(boolean closable) {
+        delegate.setClosable(closable);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.Window#setAssistivePrefix
+     */
+    public B setAssistivePrefix(String assistivePrefix) {
+        delegate.setAssistivePrefix(assistivePrefix);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.Window#setAssistivePostfix
+     */
+    public B setAssistivePostfix(String assistivePostfix) {
+        delegate.setAssistivePostfix(assistivePostfix);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.Window#setAssistiveRole
+     */
+    public B setAssistiveRole(WindowRole assistiveRole) {
+        delegate.setAssistiveRole(assistiveRole);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.Window#setTabStopEnabled
+     */
+    public B setTabStopEnabled(boolean tabStopEnabled) {
+        delegate.setTabStopEnabled(tabStopEnabled);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.Window#setTabStopTopAssistiveText
+     */
+    public B setTabStopTopAssistiveText(String tabStopTopAssistiveText) {
+        delegate.setTabStopTopAssistiveText(tabStopTopAssistiveText);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.Window#setTabStopBottomAssistiveText
+     */
+    public B setTabStopBottomAssistiveText(String tabStopBottomAssistiveText) {
+        delegate.setTabStopBottomAssistiveText(tabStopBottomAssistiveText);
         return self;
     }
     
@@ -79,14 +118,6 @@ public class WindowBuilder<T extends Window, B extends WindowBuilder<T, B>> exte
      */
     public B setPositionY(int positionY) {
         delegate.setPositionY(positionY);
-        return self;
-    }
-    
-    /**
-     * @see com.vaadin.ui.Window#addWindowOrderChangeListener
-     */
-    public B addWindowOrderChangeListener(WindowOrderChangeListener windowOrderChangeListener) {
-        delegate.addWindowOrderChangeListener(windowOrderChangeListener);
         return self;
     }
     
@@ -147,50 +178,42 @@ public class WindowBuilder<T extends Window, B extends WindowBuilder<T, B>> exte
     }
     
     /**
-     * @see com.vaadin.ui.Window#setAssistivePrefix
+     * @see com.vaadin.ui.Window#addListener
      */
-    public B setAssistivePrefix(String assistivePrefix) {
-        delegate.setAssistivePrefix(assistivePrefix);
+    public B addListener(FocusListener listener) {
+        delegate.addListener(listener);
         return self;
     }
     
     /**
-     * @see com.vaadin.ui.Window#setAssistivePostfix
+     * @see com.vaadin.ui.Window#addListener
      */
-    public B setAssistivePostfix(String assistivePostfix) {
-        delegate.setAssistivePostfix(assistivePostfix);
+    public B addListener(ResizeListener listener) {
+        delegate.addListener(listener);
         return self;
     }
     
     /**
-     * @see com.vaadin.ui.Window#setAssistiveRole
+     * @see com.vaadin.ui.Window#addListener
      */
-    public B setAssistiveRole(WindowRole assistiveRole) {
-        delegate.setAssistiveRole(assistiveRole);
+    public B addListener(BlurListener listener) {
+        delegate.addListener(listener);
         return self;
     }
     
     /**
-     * @see com.vaadin.ui.Window#setTabStopEnabled
+     * @see com.vaadin.ui.Window#addListener
      */
-    public B setTabStopEnabled(boolean tabStopEnabled) {
-        delegate.setTabStopEnabled(tabStopEnabled);
+    public B addListener(CloseListener listener) {
+        delegate.addListener(listener);
         return self;
     }
     
     /**
-     * @see com.vaadin.ui.Window#setTabStopTopAssistiveText
+     * @see com.vaadin.ui.Window#setPosition
      */
-    public B setTabStopTopAssistiveText(String tabStopTopAssistiveText) {
-        delegate.setTabStopTopAssistiveText(tabStopTopAssistiveText);
-        return self;
-    }
-    
-    /**
-     * @see com.vaadin.ui.Window#setTabStopBottomAssistiveText
-     */
-    public B setTabStopBottomAssistiveText(String tabStopBottomAssistiveText) {
-        delegate.setTabStopBottomAssistiveText(tabStopBottomAssistiveText);
+    public B setPosition(int param1, int param2) {
+        delegate.setPosition(param1, param2);
         return self;
     }
     

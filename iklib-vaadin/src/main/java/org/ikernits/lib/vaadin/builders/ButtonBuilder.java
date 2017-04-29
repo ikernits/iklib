@@ -12,6 +12,22 @@ public class ButtonBuilder<T extends Button, B extends ButtonBuilder<T, B>> exte
     }
     
     /**
+     * @see com.vaadin.ui.Button#addListener
+     */
+    public B addListener(ClickListener listener) {
+        delegate.addListener(listener);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.Button#setIcon
+     */
+    public B setIcon(Resource param1, String param2) {
+        delegate.setIcon(param1, param2);
+        return self;
+    }
+    
+    /**
      * @see com.vaadin.ui.Button#addClickListener
      */
     public B addClickListener(ClickListener clickListener) {
@@ -40,14 +56,6 @@ public class ButtonBuilder<T extends Button, B extends ButtonBuilder<T, B>> exte
      */
     public B setHtmlContentAllowed(boolean htmlContentAllowed) {
         delegate.setHtmlContentAllowed(htmlContentAllowed);
-        return self;
-    }
-    
-    /**
-     * @see com.vaadin.ui.Button#setIcon
-     */
-    public B setIcon(Resource param1, String param2) {
-        delegate.setIcon(param1, param2);
         return self;
     }
     

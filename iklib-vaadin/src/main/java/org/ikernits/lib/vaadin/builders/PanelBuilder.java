@@ -13,14 +13,6 @@ public class PanelBuilder<T extends Panel, B extends PanelBuilder<T, B>> extends
     }
     
     /**
-     * @see com.vaadin.ui.Panel#addClickListener
-     */
-    public B addClickListener(ClickListener clickListener) {
-        delegate.addClickListener(clickListener);
-        return self;
-    }
-    
-    /**
      * @see com.vaadin.ui.Panel#setScrollLeft
      */
     public B setScrollLeft(int scrollLeft) {
@@ -45,6 +37,14 @@ public class PanelBuilder<T extends Panel, B extends PanelBuilder<T, B>> extends
     }
     
     /**
+     * @see com.vaadin.ui.Panel#addListener
+     */
+    public B addListener(ClickListener listener) {
+        delegate.addListener(listener);
+        return self;
+    }
+    
+    /**
      * @see com.vaadin.ui.Panel#setCaption
      */
     public B setCaption(String caption) {
@@ -59,4 +59,13 @@ public class PanelBuilder<T extends Panel, B extends PanelBuilder<T, B>> extends
         delegate.setTabIndex(tabIndex);
         return self;
     }
+    
+    /**
+     * @see com.vaadin.ui.Panel#addClickListener
+     */
+    public B addClickListener(ClickListener clickListener) {
+        delegate.addClickListener(clickListener);
+        return self;
+    }
+    
 }

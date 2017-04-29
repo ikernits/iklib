@@ -55,7 +55,11 @@
             <artifactId>httpclient</artifactId>
             <version>${org.apache.httpcomponents.httpclient.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>${org.apache.httpcomponents.httpclient.version}</version>
+        </dependency>
 
         <!-- spring core -->
         <dependency>

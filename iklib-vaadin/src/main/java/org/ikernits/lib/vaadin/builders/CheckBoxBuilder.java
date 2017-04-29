@@ -12,10 +12,10 @@ public class CheckBoxBuilder<T extends CheckBox, B extends CheckBoxBuilder<T, B>
     }
     
     /**
-     * @see com.vaadin.ui.CheckBox#setValue
+     * @see com.vaadin.ui.CheckBox#addBlurListener
      */
-    public B setValue(Boolean value) {
-        delegate.setValue(value);
+    public B addBlurListener(BlurListener blurListener) {
+        delegate.addBlurListener(blurListener);
         return self;
     }
     
@@ -28,10 +28,18 @@ public class CheckBoxBuilder<T extends CheckBox, B extends CheckBoxBuilder<T, B>
     }
     
     /**
-     * @see com.vaadin.ui.CheckBox#addBlurListener
+     * @see com.vaadin.ui.CheckBox#addListener
      */
-    public B addBlurListener(BlurListener blurListener) {
-        delegate.addBlurListener(blurListener);
+    public B addListener(FocusListener listener) {
+        delegate.addListener(listener);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.CheckBox#addListener
+     */
+    public B addListener(BlurListener listener) {
+        delegate.addListener(listener);
         return self;
     }
     

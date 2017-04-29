@@ -12,6 +12,14 @@ public class AbstractFocusableBuilder<T extends AbstractFocusable, B extends Abs
     }
     
     /**
+     * @see com.vaadin.ui.AbstractFocusable#addBlurListener
+     */
+    public B addBlurListener(BlurListener blurListener) {
+        delegate.addBlurListener(blurListener);
+        return self;
+    }
+    
+    /**
      * @see com.vaadin.ui.AbstractFocusable#addFocusListener
      */
     public B addFocusListener(FocusListener focusListener) {
@@ -20,18 +28,26 @@ public class AbstractFocusableBuilder<T extends AbstractFocusable, B extends Abs
     }
     
     /**
-     * @see com.vaadin.ui.AbstractFocusable#setTabIndex
+     * @see com.vaadin.ui.AbstractFocusable#addListener
      */
-    public B setTabIndex(int tabIndex) {
-        delegate.setTabIndex(tabIndex);
+    public B addListener(BlurListener listener) {
+        delegate.addListener(listener);
         return self;
     }
     
     /**
-     * @see com.vaadin.ui.AbstractFocusable#addBlurListener
+     * @see com.vaadin.ui.AbstractFocusable#addListener
      */
-    public B addBlurListener(BlurListener blurListener) {
-        delegate.addBlurListener(blurListener);
+    public B addListener(FocusListener listener) {
+        delegate.addListener(listener);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.AbstractFocusable#setTabIndex
+     */
+    public B setTabIndex(int tabIndex) {
+        delegate.setTabIndex(tabIndex);
         return self;
     }
     

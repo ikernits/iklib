@@ -3,7 +3,7 @@ package org.ikernits.lib.vaadin.builders;
 import com.vaadin.ui.ProgressBar;
 
 @SuppressWarnings({"deprecation", "unused", "unchecked"})
-public class ProgressBarBuilder<T extends ProgressBar, B extends ProgressBarBuilder<T, B>> extends AbstractComponentBuilder<T, B> {
+public class ProgressBarBuilder<T extends ProgressBar, B extends ProgressBarBuilder<T, B>> extends AbstractFieldBuilder<T, B> {
 
     public ProgressBarBuilder(T delegate) {
         super(delegate);
@@ -12,7 +12,7 @@ public class ProgressBarBuilder<T extends ProgressBar, B extends ProgressBarBuil
     /**
      * @see com.vaadin.ui.ProgressBar#setValue
      */
-    public B setValue(float value) {
+    public B setValue(Float value) {
         delegate.setValue(value);
         return self;
     }

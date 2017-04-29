@@ -21,8 +21,10 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.ProgressBar;
 import com.vaadin.ui.Slider;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import org.apache.commons.io.FileUtils;
@@ -59,6 +61,7 @@ class VaadinBuilderGenerator {
         ComboBox.class,
         CheckBox.class,
         Link.class,
+        Table.class,
         Grid.class,
         Window.class,
         FormLayout.class,
@@ -66,7 +69,8 @@ class VaadinBuilderGenerator {
         PasswordField.class,
         ListSelect.class,
         ProgressBar.class,
-        Slider.class
+        Slider.class,
+        Upload.class
     );
 
     private static class IndentedPrinter {
@@ -324,6 +328,6 @@ class VaadinBuilderGenerator {
 
     public static void main(String[] args) throws IOException {
         FileUtils.forceMkdir(new File(targetPath));
-       new VaadinBuilderGenerator().build().generate();
+        new VaadinBuilderGenerator().build().generate();
     }
 }

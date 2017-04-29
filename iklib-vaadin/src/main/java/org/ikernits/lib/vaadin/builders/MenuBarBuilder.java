@@ -13,10 +13,10 @@ public class MenuBarBuilder<T extends MenuBar, B extends MenuBarBuilder<T, B>> e
     }
     
     /**
-     * @see com.vaadin.ui.MenuBar#setHtmlContentAllowed
+     * @see com.vaadin.ui.MenuBar#addItem
      */
-    public B setHtmlContentAllowed(boolean htmlContentAllowed) {
-        delegate.setHtmlContentAllowed(htmlContentAllowed);
+    public B addItem(String param1, Resource param2, Command param3) {
+        delegate.addItem(param1, param2, param3);
         return self;
     }
     
@@ -25,14 +25,6 @@ public class MenuBarBuilder<T extends MenuBar, B extends MenuBarBuilder<T, B>> e
      */
     public B addItem(String param1, Command param2) {
         delegate.addItem(param1, param2);
-        return self;
-    }
-    
-    /**
-     * @see com.vaadin.ui.MenuBar#addItem
-     */
-    public B addItem(String param1, Resource param2, Command param3) {
-        delegate.addItem(param1, param2, param3);
         return self;
     }
     
@@ -65,6 +57,14 @@ public class MenuBarBuilder<T extends MenuBar, B extends MenuBarBuilder<T, B>> e
      */
     public B setTabIndex(int tabIndex) {
         delegate.setTabIndex(tabIndex);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.MenuBar#setHtmlContentAllowed
+     */
+    public B setHtmlContentAllowed(boolean htmlContentAllowed) {
+        delegate.setHtmlContentAllowed(htmlContentAllowed);
         return self;
     }
     

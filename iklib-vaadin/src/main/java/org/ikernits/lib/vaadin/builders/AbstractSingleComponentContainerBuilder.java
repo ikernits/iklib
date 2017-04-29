@@ -14,10 +14,26 @@ public class AbstractSingleComponentContainerBuilder<T extends AbstractSingleCom
     }
     
     /**
+     * @see com.vaadin.ui.AbstractSingleComponentContainer#setWidth
+     */
+    public B setWidth(float width, Unit unit) {
+        delegate.setWidth(width, unit);
+        return self;
+    }
+    
+    /**
      * @see com.vaadin.ui.AbstractSingleComponentContainer#addComponentAttachListener
      */
     public B addComponentAttachListener(ComponentAttachListener componentAttachListener) {
         delegate.addComponentAttachListener(componentAttachListener);
+        return self;
+    }
+    
+    /**
+     * @see com.vaadin.ui.AbstractSingleComponentContainer#setHeight
+     */
+    public B setHeight(float height, Unit unit) {
+        delegate.setHeight(height, unit);
         return self;
     }
     
@@ -34,22 +50,6 @@ public class AbstractSingleComponentContainerBuilder<T extends AbstractSingleCom
      */
     public B setContent(Component content) {
         delegate.setContent(content);
-        return self;
-    }
-    
-    /**
-     * @see com.vaadin.ui.AbstractSingleComponentContainer#setWidth
-     */
-    public B setWidth(float width, Unit unit) {
-        delegate.setWidth(width, unit);
-        return self;
-    }
-    
-    /**
-     * @see com.vaadin.ui.AbstractSingleComponentContainer#setHeight
-     */
-    public B setHeight(float height, Unit unit) {
-        delegate.setHeight(height, unit);
         return self;
     }
     

@@ -17,8 +17,10 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.ProgressBar;
 import com.vaadin.ui.Slider;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -76,6 +78,10 @@ public class VaadinBuilders {
         return new LinkBuilder<>(new Link());
     }
     
+    public static TableBuilder<Table, ? extends TableBuilder<Table, ?>> table() {
+        return new TableBuilder<>(new Table());
+    }
+    
     public static GridBuilder<Grid, ? extends GridBuilder<Grid, ?>> grid() {
         return new GridBuilder<>(new Grid());
     }
@@ -106,6 +112,10 @@ public class VaadinBuilders {
     
     public static SliderBuilder<Slider, ? extends SliderBuilder<Slider, ?>> slider() {
         return new SliderBuilder<>(new Slider());
+    }
+    
+    public static UploadBuilder<Upload, ? extends UploadBuilder<Upload, ?>> upload() {
+        return new UploadBuilder<>(new Upload());
     }
     
 }

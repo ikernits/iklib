@@ -7,6 +7,8 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.JsonParseException;
 import org.ikernits.lib.common.GsonUtils;
 
+import java.io.File;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -23,27 +25,27 @@ public interface HttpClientService {
     class HttpRequest {
         private final URI uri;
         private final HttpRequestType type;
+        private final boolean multipart;
         private final Map<String, String> headers;
-        private final Map<String, String> params;
+        private final Map<String, Object> params;
 
-        public static Builder builder() {
-            return new Builder();
+        public static Builder builder(String url) {
+            return new Builder(url);
         }
 
-        public static Builder buildGet(String url) {
-            return new Builder()
-                .setType(HttpRequestType.Get)
-                .setUri(url);
+        public static Builder get(String url) {
+            return new Builder(url)
+                .setType(HttpRequestType.Get);
         }
 
-        public static Builder buildPost(String url) {
-            return new Builder()
-                .setType(HttpRequestType.Post)
-                .setUri(url);
+        public static Builder post(String url) {
+            return new Builder(url)
+                .setType(HttpRequestType.Post);
         }
 
-        private HttpRequest(HttpRequestType type, URI uri, String userAgent, Map<String, String> headers, Map<String, String> params) {
+        private HttpRequest(HttpRequestType type, boolean multipart, URI uri, Map<String, String> headers, Map<String, Object> params) {
             this.type = type;
+            this.multipart = multipart;
             this.uri = uri;
             this.headers = ImmutableMap.copyOf(headers);
             this.params = ImmutableMap.copyOf(params);
@@ -61,39 +63,39 @@ public interface HttpClientService {
             return type;
         }
 
+        public boolean isMultipart() {
+            return multipart;
+        }
+
         public Map<String, String> getHeaders() {
             return headers;
         }
 
-        public Map<String, String> getParams() {
+        public Map<String, Object> getParams() {
             return params;
         }
-
-
 
         public static class Builder {
             private HttpRequestType type = HttpRequestType.Get;
             private URI uri = null;
-            private String userAgent = null;
+            private boolean multipart;
             private Map<String, String> headers = new HashMap<>();
-            private Map<String, String> params = new HashMap<>();
+            private Map<String, Object> params = new HashMap<>();
 
-            public Builder setUri(String url) {
+            public Builder(String url) {
                 try {
                     this.uri = new URI(url);
                 } catch (URISyntaxException e) {
                     throw new IllegalArgumentException("Invalid URL: '" + url + "'");
-                }
-                return this;
-            }
+                }            }
 
             public Builder setType(HttpRequestType type) {
                 this.type = type;
                 return this;
             }
 
-            public Builder setUserAgent(String userAgent) {
-                this.userAgent = userAgent;
+            public Builder setMultipart(boolean multipart) {
+                this.multipart = multipart;
                 return this;
             }
 
@@ -107,14 +109,35 @@ public interface HttpClientService {
                 return this;
             }
 
+            public Builder addParam(String name, InputStream inputStream) {
+                params.put(name, inputStream);
+                return this;
+            }
+
+            public Builder addParam(String name, byte[] data) {
+                params.put(name, data);
+                return this;
+            }
+
+            public Builder addParam(String name, File file) {
+                params.put(name, file);
+                return this;
+            }
+
+            public Builder addJsonParam(String name, Object value) {
+                params.put(name, GsonUtils.gson.toJson(value));
+                return this;
+            }
+
             public HttpRequest build() {
                 return new HttpRequest(
-                    type, uri, userAgent, headers, params
+                    type, multipart, uri, headers, params
                 );
             }
+
+
         }
     }
-
 
     class HttpResponse {
         private final Integer code;
