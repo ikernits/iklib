@@ -87,7 +87,8 @@ public interface HttpClientService {
                     this.uri = new URI(url);
                 } catch (URISyntaxException e) {
                     throw new IllegalArgumentException("Invalid URL: '" + url + "'");
-                }            }
+                }
+            }
 
             public Builder setType(HttpRequestType type) {
                 this.type = type;
@@ -134,8 +135,6 @@ public interface HttpClientService {
                     type, multipart, uri, headers, params
                 );
             }
-
-
         }
     }
 
