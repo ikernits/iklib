@@ -23,7 +23,7 @@ public class JettyWebConfigResolver {
     public String getDescriptorName() {
         URL configUrl = Thread.currentThread().getContextClassLoader().getResource("WEB-INF/" + configName);
         if (configUrl == null) {
-            throw new IllegalStateException("Failed to web application descriptor " + configName);
+            throw new IllegalStateException("Failed to locate web application descriptor " + configName);
         }
         return configUrl.toString();
     }

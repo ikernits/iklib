@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="classpath:META-INF/spring-context-properties.xml"/>
+
+    <bean id="jettyWebConfigResolver" class="org.ikernits.lib.jetty.JettyWebConfigResolver">
+        <property name="configName" value="${server.web.xml:web.xml}"/>
+    </bean>
+
+    <bean id="jettyErrorHandler" class="org.ikernits.lib.jetty.JettyErrorHandler">
+    </bean>
+
+    <bean id="jettyServerLifecycleService" class="org.ikernits.lib.jetty.JettyServerLifecycleService">
+        <property name="server" ref="jettyServer"/>
+    </bean>
+
+    <bean id="jettyWebAppContext" class="org.eclipse.jetty.webapp.WebAppContext">
+        <property name="contextPath" value="/"/>
+        <property name="war" value="#{jettyWebConfigResolver.configLocation}"/>
+        <property name="descriptor" value="#{jettyWebConfigResolver.descriptorName}"/>
+        <!--<property name="descriptor" value="${server.web.xml:web.xml}"/>-->
+        <property name="extractWAR" value="false"/>
+        <property name="errorHandler" ref="jettyErrorHandler"/>
+    </bean>
+
+
+    <bean id="jettyWebSocketJsr356Deploy" class="org.springframework.beans.factory.config.MethodInvokingBean">
+        <property name="staticMethod" value="org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer.configureContext"/>
+        <property name="arguments">
+            <list>
+                <ref bean="jettyWebAppContext"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="jettyServer" class="org.eclipse.jetty.server.Server">
+        <constructor-arg>
+            <bean class="org.eclipse.jetty.util.thread.QueuedThreadPool">
+                <property name="minThreads" value="${server.threads.min:10}"/>
+                <property name="maxThreads" value="${server.threads.max:50}"/>
+            </bean>
+        </constructor-arg>
+        <property name="connectors">
+            <list>
+                <bean id="connector" class="org.eclipse.jetty.server.ServerConnector">
+                    <constructor-arg ref="jettyServer"/>
+                    <property name="port" value="${server.port:8080}"/>
+                </bean>
+            </list>
+        </property>
+        <property name="handler" ref="jettyWebAppContext"/>
+    </bean>
+</beans>

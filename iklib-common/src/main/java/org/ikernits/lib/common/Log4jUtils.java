@@ -92,6 +92,7 @@ public class Log4jUtils {
             log.info("log4j uses startup configuration");
             return;
         }
+
         if (ClassLoader.getSystemResource(CONFIG_CLASSPATH) != null) {
             try {
                 configureFromClasspath(CONFIG_CLASSPATH);
